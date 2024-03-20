@@ -1,4 +1,4 @@
-# News_article_classifier
-News Article Classification
+# News Article Classifier with Custom K-Means Implementation
 
+This project explores the development and evaluation of a custom K-Means clustering algorithm tailored for text data, specifically applied to the 20 Newsgroups dataset. By leveraging a Term Frequency-Inverse Document Frequency (TF-IDF) vectorization approach, the project aims to organize text documents into clusters that enhance our understanding of inherent groupings based on content similarity. Utilizing the Scikit-learn library's KMeans as a benchmark, the project compares the custom implementation against established methods through a variety of metrics, including Homogeneity, Completeness, V-measure, Adjusted Rand Index, and Silhouette Coefficient. This comparison is essential for evaluating the fitness of the custom model in handling complex text data, focusing on improving clustering quality and execution efficiency. 
 
