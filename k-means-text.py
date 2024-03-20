@@ -6,6 +6,8 @@ from collections import defaultdict
 from sklearn import metrics
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import euclidean_distances
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 
 #################################################################
 # Load Dataset
@@ -45,6 +47,23 @@ def fit_and_evaluate(km, X, n_runs=5):
         print(f"{score_name}: {mean_score:.3f} ± {std_score:.3f}")
 
 
+newsgroup_names = dataset.target_names
+
+def visualize_clusters(X, labels, n_clusters):
+    pca = PCA(n_components=2)
+    reduced_X = pca.fit_transform(X.toarray())  # Convert X to dense format if necessary
+    
+    # Create a scatter plot for each cluster using its corresponding newsgroup name
+    plt.figure(figsize=(10, 8))  # Optional: Adjust figure size for better visualization
+    for i in range(n_clusters):
+        cluster_points = reduced_X[labels == i]
+        plt.scatter(cluster_points[:, 0], cluster_points[:, 1], label=newsgroup_names[i], alpha=0.5, edgecolors='w')
+    
+    plt.title('Cluster Visualization with Newsgroup Names')
+    plt.xlabel('PCA Feature 1')
+    plt.ylabel('PCA Feature 2')
+    plt.legend()
+    plt.show()
 #################################################################
 # Vectorize 
 #################################################################
@@ -133,3 +152,8 @@ fit_and_evaluate(kmeans_custom, X_tfidf)
 print("\nScikit-learn KMeans Scores:")
 kmeans_sklearn = SKLearnKMeans(n_clusters=true_k, max_iter=300, tol=0.0001, random_state=42)
 fit_and_evaluate(kmeans_sklearn, X_tfidf)
+
+visualize_clusters(X_tfidf, kmeans_custom.labels_, true_k)
+
+# Or after fitting the Scikit-learn KMeans:
+visualize_clusters(X_tfidf, kmeans_sklearn.labels_, true_k)
